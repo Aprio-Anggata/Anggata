@@ -143,7 +143,7 @@
 			echo @$hari;
 		}
 
-		function login($table,$username,$password,$alamat){
+		function login($table,$username,$password,$role){
 			@session_start();
 			$sql = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM $table WHERE user = '$username' AND password = '$password'");
 			$cek = mysqli_num_rows($sql);

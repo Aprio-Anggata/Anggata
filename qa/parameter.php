@@ -54,13 +54,13 @@
 		@$cek = $aksi->cekdata("parameter_qa_tbl WHERE id_parameter = '$id_parameter' AND id_parameter != '$edit[id_parameter]'");
 		if 
 		($cek > 0) {
-			$aksi->pesan("Parameter sudah ada");
+			$aksi->pesan("Parameter is Existing");
 		}else{
 			// $aksi->simpan($table,$data);
 			mysqli_query($GLOBALS["___mysqli_ston"],"INSERT INTO parameter_qa_tbl (parameter, par_desc, par_weight, id_sub_par, status_par, date_valid_from, date_valid_to, date_inserted, inserted_by) 
 			 value 
 			 ('$parameter','$par_desc','$par_weight','$id_sub_par','$status_par','$date_valid_from','$date_valid_to','$date_inserted','$inserted_by')"); 
-			$aksi->alert("Parameter Berhasil Disimpan",$redirect);
+			$aksi->alert("Parameters Successfully Saved",$redirect);
 		}
 	}
 	
@@ -68,11 +68,10 @@
 		$id_parameter = $_POST['id_parameter'];
 		@$cek = $aksi->cekdata("parameter_qa_tbl WHERE id_parameter = '$id_parameter' AND id_parameter != '$edit[id_parameter]'");
 		if ($cek > 0) {
-			$aksi->pesan("Parameter sudah ada");
+			$aksi->pesan("Parameters is Existing");
 		}else{
-			// mysqli_query($GLOBALS["___mysqli_ston"],"UPDATE parameter_qa_tbl set parameter='$parameter', par_desc='$par_desc', par_weight='$par_weight', id_sub_par='$id_sub_par', status_par='$status_par', date_valid_from='$date_valid_from', date_valid_to='$date_valid_to',date_inserted='$date_inserted', inserted_by='$inserted_by' WHERE id_parameter = '$id_parameter'");
 			$aksi->update($table,$data,$where);
-			$aksi->alert("Parameter Berhasil Diubah",$redirect);
+			$aksi->alert("Parameters Successfully Changed",$redirect);
 		}
 	}
 
@@ -82,7 +81,7 @@
 
 	if (isset($_GET['hapus'])) {
 		$aksi->hapus($table,$where);
-		$aksi->alert("Parameter Berhasil Dihapus",$redirect);
+		$aksi->alert("Parameter Successfully Deleted",$redirect);
 	}
 
 	if (isset($_POST['bcari'])) {
@@ -131,50 +130,49 @@
 										<input type="text" name="id_parameter" class="form-control" placeholder="Insert ID parameter Name" autocomplete="on" required onsubmit="this.setCustomValidity('')">
 									</div>  -->
 									<div class="form-group">
-										<label>PARAMETER</label>                
-										<!-- <input type="text" name="parameter" class="form-control" placeholder="Insert parameter Name" autocomplete="off" required onsubmit="this.setCustomValidity('')"> -->
-										<input type="text" name="parameter" class="form-control" value="<?php if(@$_GET['parameter']==""){echo @$parameter; }else{ echo $edit['parameter'];} ?>" required placeholder="Masukkan Username ">
+										<label>PARAMETER</label>
+										<input type="text" name="parameter" class="form-control" placeholder="Insert Parameter" required value="<?php echo @$edit['parameter']; ?>" list="gol">
 									</div> 
 									<div class="form-group">
 										<label>Parameter Description</label>                
-										<textarea class="form-control" name="par_desc" rows="3" required><?php echo @$edit['par_desc']; ?></textarea>
+										<textarea class="form-control" name="par_desc" rows="3" required placeholder="Insert Parameter Description"><?php echo @$edit['par_desc']; ?></textarea>
 									</div> 
 
 									<div class="form-group">
 										<label>Parameter Weight</label>                
-										<input type="number" name="par_weight" class="form-control" placeholder="Insert parameter Weight" autocomplete="off" required onsubmit="this.setCustomValidity('')">
+										<input type="number" name="par_weight" class="form-control" placeholder="Insert Parameter Weight" required value="<?php echo @$edit['par_weight']; ?>" list="gol">
 									</div> 
 
 									<div class="form-group">
-										<label>ID Sub Parameter</label>                
-										<input type="text" name="id_sub_par" class="form-control" placeholder="Insert ID Sub parameter" autocomplete="off" required onsubmit="this.setCustomValidity('')">
+										<label>ID Sub Parameter</label>
+										<input type="text" name="id_sub_par" class="form-control" placeholder="Insert ID Sub parameter" required value="<?php echo @$edit['id_sub_par']; ?>" list="gol">
 									</div> 
 									<div class="form-group">
 										<label>Status</label>
-										<select type="text" name="status_par" class="form-control" autocomplete="off" required onsubmit="this.setCustomValidity('')">
+										<select type="text" name="status_par" class="form-control" placeholder="a or n" required value="<?php echo @$edit['status_par']; ?>" list="gol">
 											<option value=Null></option>
 											<option value="a">a</option>
 											<option value="n">n</option>
 										</select>
 									</div>
 									<div class="form-group">
-										<label>Date Valid From</label>                
-										<input type="date" name="date_valid_from" class="form-control" placeholder="Insert Date" autocomplete="off" required onsubmit="this.setCustomValidity('')">
+										<label>Date Valid From</label>
+										<input type="date" name="date_valid_from" class="form-control" placeholder="Insert Date" required value="<?php echo @$edit['date_valid_from']; ?>" list="gol">
 									</div> 
 
 									<div class="form-group">
-										<label>Date Valid To</label>                
-										<input type="date" name="date_valid_to" class="form-control" placeholder="Insert Date" autocomplete="off" required onsubmit="this.setCustomValidity('')">
+										<label>Date Valid To</label>
+										<input type="date" name="date_valid_to" class="form-control" placeholder="Insert Date" required value="<?php echo @$edit['date_valid_to']; ?>" list="gol">
 									</div> 
 
 									<div class="form-group">
-										<label>Date Inserted</label>                
-										<input type="date" name="date_inserted" class="form-control" placeholder="Insert Date" autocomplete="off" required onsubmit="this.setCustomValidity('')">
+										<label>Date Inserted</label>
+										<input type="date" name="date_inserted" class="form-control" placeholder="Insert Date" required value="<?php echo @$edit['date_inserted']; ?>" list="gol">
 									</div> 
 
 									<div class="form-group">
-										<label>Insert By</label>                
-										<input type="text" name="inserted_by" class="form-control" placeholder="Insert By" autocomplete="off" required onsubmit="this.setCustomValidity('')">
+										<label>Insert By</label>
+										<input type="text" name="inserted_by" class="form-control" placeholder="Insert By" required value="<?php echo @$edit['inserted_by']; ?>" list="gol">
 									</div> 
 									<div class="form-group">
 										<?php  
@@ -194,7 +192,7 @@
 				</div>
 				<div class="col-md-8">
 					<div class="panel panel-default">
-						<div class="panel-heading">DAFTAR PARAMETER</div>
+						<div class="panel-heading">PARAMETER LIST</div>
 						<div class="panel-body">
 							<div class="col-md-12">
 								<form method="post">
@@ -245,8 +243,8 @@
 													<td class="text-center"><?php echo $r['date_valid_to'];?></td>
 													<td class="text-center"><?php echo $r['date_inserted'];?></td>
 													<td class="text-center"><?php echo $r['inserted_by'];?></td>
-													<td align="center"><a href="?menu=parameter&edit&id=<?php echo $r['id_parameter']; ?>"><span class="glyphicon glyphicon-edit"></span></a></td>
-													<td align="center"><a href="?menu=parameter&hapus&id=<?php echo md5(sha1($r['id_parameter'])); ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
+													<td align="center"><a href="?menu=parameter&edit&id=<?php echo md5(sha1($r['id_parameter'])); ?>"><span class="glyphicon glyphicon-edit"></span></a></td>
+													<td align="center"><a onclick="return confirm('Are you sure want to delete this data ?')" href="?menu=parameter&hapus&id=<?php echo md5(sha1($r['id_parameter'])); ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
 													</tr>
 											<?php } } ?>
 										 </tbody>

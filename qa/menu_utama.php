@@ -69,7 +69,7 @@
 								<li>
 									<a href="?menu=sub_parameter"><strong style="color: black;font-calibri: Myriad Pro Light">SUB PARAMETER</strong></a>
 								</li>
-								<li>
+								<!-- <li>
 									<a href="?menu=tarif"><strong style="color: black;font-calibri: Myriad Pro Light">PENGELOLAAN DATA TARIF</strong></a>
 								</li>
 								<li>
@@ -80,20 +80,20 @@
 								</li>
 								<li>
 									<a href="?menu=manager"><strong style="color: black;font-calibri: Myriad Pro Light">PENGELOLAAN DATA MANAGER</strong></a>
-								</li>
+								</li> -->
 							</ul>
 						</li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="transaksi">
-								<strong style="color: white;font-calibri: Myriad Pro Light">TRANSAKSI</strong>&nbsp;
+								<strong style="color: white;font-calibri: Myriad Pro Light">PROCESS</strong>&nbsp;
 								<span class="caret" style="color: white"></span>
 							</a>
 							<ul class="dropdown-menu" aria-labelledby="transaksi">
 								<li>
-									<a href="?menu=tagihan"><strong style="color: black;font-calibri: Myriad Pro Light">DAFTAR TAGIHAN PELANGGAN</strong></a>
+									<a href="?menu=process"><strong style="color: black;font-calibri: Myriad Pro Light">INBOUND CALL</strong></a>
 								</li>
 								<li>
-									<a href="?menu=penggunaan"><strong style="color: black;font-calibri: Myriad Pro Light">PENGELOLAAN PENGGUNAAN</strong></a>
+									<a href="?menu=penggunaan"><strong style="color: black;font-calibri: Myriad Pro Light">SOCIAL MEDIA</strong></a>
 								</li>
 							</ul>
 						</li>
@@ -104,16 +104,16 @@
 							</a>
 							<ul class="dropdown-menu" aria-labelledby="laporan">
 								<li>
-									<a href="?menu=laporan&tarif"><strong style="color: black;font-calibri: Myriad Pro Light">LAPORAN DATA TARIF</strong></a>
+									<a href="?menu=laporan&tarif"><strong style="color: black;font-calibri: Myriad Pro Light">PERFORMANCE REPORT</strong></a>
 								</li>
 								<li>
-									<a href="?menu=laporan&pelanggan"><strong style="color: black;font-calibri: Myriad Pro Light">LAPORAN DATA PELANGGAN</strong></a>
+									<a href="?menu=laporan&pelanggan"><strong style="color: black;font-calibri: Myriad Pro Light">MISTAKE REPORT</strong></a>
 								</li>
 								<li>
-									<a href="?menu=laporan&teller"><strong style="color: black;font-calibri: Myriad Pro Light">LAPORAN DATA TELLER</strong></a>
+									<a href="?menu=laporan&teller"><strong style="color: black;font-calibri: Myriad Pro Light">FEEDBACK FROM TEAM LEADER</strong></a>
 								</li>
 								<li><div class="divider"></div></li>
-								<li>
+								<!-- <li>
 									<a href="?menu=laporan&tagihan_bulan"><strong style="color: black;font-calibri: Myriad Pro Light">LAPORAN TAGIHAN PELANGGAN (PERBULAN)</strong></a>
 								</li>
 								<li>
@@ -121,7 +121,7 @@
 								</li>
 								<li>
 									<a href="?menu=laporan&riwayat_penggunaan"><strong style="color: black;font-calibri: Myriad Pro Light">LAPORAN RIWAYAT PENGGUNAAN (PERTAHUN)</strong></a>
-								</li>
+								</li> -->
 							</ul>
 						</li>
 					</ul>
@@ -157,6 +157,7 @@
 			// case 'tarif':include'tarif.php'; break;
 			case 'parameter':include'parameter.php'; break;
 			case 'sub_parameter':include'sub_parameter.php'; break;
+			case 'process':include'process.php'; break;
 			// case 'parameter-proses':include'parameter-proses.php'; break;
 			// case 'parameter-aksi':include'parameter-aksi.php'; break;
 			// case 'parameter-ubah':include'parameter-ubah.php'; break;

@@ -8,6 +8,21 @@
 	$where = " md5(sha1(id_sub_tbl)) = '$id'";
 	$redirect = "?menu=sub_parameter";
 
+	// cek username
+	@$cek_user = $aksi->cekdata("parameter_qa_tbl WHERE parameter = '$_POST[parameter]'");
+	$field = array(
+		'id_sub_tbl'=>@$_POST['id_sub_tbl'],
+		'sub_par_name'=>@$_POST['sub_par_name'],
+		'sub_par_score'=>@$_POST['sub_par_score'],
+		'status_sub'=>@$_POST['status_sub'],
+		'date_valid_from'=>@$_POST['date_valid_from'],
+		'date_valid_to'=>@$_POST['date_valid_to'],
+		'inserted_by'=>@$_POST['inserted_by'],
+		'date_inserted'=>"date_inserted",
+		'id_sub_par'=>@$_POST['id_sub_par'],
+		'ko_status'=>@$_POST['ko_status'],
+	);
+
 	//untuk kebutuhan crud
 	@$id_sub_tbl = $_POST['id_sub_tbl'];
     @$sub_par_name = $_POST['sub_par_name'];
@@ -22,7 +37,7 @@
 
 	//tampung data
 	$data = array(
-		'id_sub_tbl'=>$id_sub_tbl,
+		// 'id_sub_tbl'=>$id_sub_tbl,
         'sub_par_name'=>$sub_par_name,
         'sub_par_score'=>$sub_par_score,
         'status_sub'=>$status_sub,
@@ -40,25 +55,24 @@
 		@$cek = $aksi->cekdata("sub_parameter_tbl WHERE id_sub_tbl = '$id_sub_tbl' AND id_sub_tbl != '$edit[id_sub_tbl]'");
 		if 
 		($cek > 0) {
-			$aksi->pesan("Sub Parameter sudah ada");
+			$aksi->pesan("Sub Parameter is Existing");
 		}else{
 			// $aksi->simpan($table,$data);
 			mysqli_query($GLOBALS["___mysqli_ston"],"INSERT INTO sub_parameter_tbl (sub_par_name, sub_par_score, status_sub, date_valid_from, date_valid_to, inserted_by, date_inserted, id_sub_par, ko_status) 
 			value 
 			('$sub_par_name','$sub_par_score','$status_sub','$date_valid_from','$date_valid_to','$inserted_by','$date_inserted','$id_sub_par','$ko_status')"); 
-			$aksi->alert("Sub Parameter Berhasil Disimpan",$redirect);
+			$aksi->alert("Sub Parameters Successfully Saved",$redirect);
 		}
 	}
-	
+
 	if (isset($_POST['bubah'])) {
 		$id_sub_tbl = $_POST['id_sub_tbl'];
 		@$cek = $aksi->cekdata("sub_parameter_tbl WHERE id_sub_tbl = '$id_sub_tbl' AND id_sub_tbl != '$edit[id_sub_tbl]'");
 		if ($cek > 0) {
-			$aksi->pesan("Sub Parameter sudah ada");
+			$aksi->pesan("Sub Parameter is Existing");
 		}else{
-			// mysqli_query($GLOBALS["___mysqli_ston"],"UPDATE sub_parameter_tbl set parameter='$parameter', par_desc='$par_desc', par_weight='$par_weight', id_sub_par='$id_sub_par', status_par='$status_par', date_valid_from='$date_valid_from', date_valid_to='$date_valid_to',date_inserted='$date_inserted', inserted_by='$inserted_by' WHERE id_sub_tbl = '$id_sub_tbl'");
 			$aksi->update($table,$data,$where);
-			$aksi->alert("Sub Parameter Berhasil Diubah",$redirect);
+			$aksi->alert("Sub Parameters Successfully Changed",$redirect);
 		}
 	}
 
@@ -68,7 +82,7 @@
 
 	if (isset($_GET['hapus'])) {
 		$aksi->hapus($table,$where);
-		$aksi->alert("Sub Parameter Berhasil Dihapus",$redirect);
+		$aksi->alert("Sub Parameter Successfully Deleted",$redirect);
 	}
 
 	if (isset($_POST['bcari'])) {
@@ -104,7 +118,7 @@
 			<div class="col-md-12">
 				<div class="col-md-4">
 					<div class="panel panel-default">
-						<?php if(!@$_GET['id']){ ?>
+						<?php if(!@$_GET['id_sub_tbl']){ ?>
 							<div class="panel-heading">MASUKKAN SUB PARAMETER</div>
 						<?php }else{ ?>
 							<div class="panel-heading">UBAH SUB PARAMETER</div>
@@ -117,53 +131,53 @@
 										<input type="text" name="id_sub_tbl" class="form-control" placeholder="Insert ID parameter Name" autocomplete="on" required onsubmit="this.setCustomValidity('')">
 									</div>  -->
 									<div class="form-group">
-										<label>Sub Parameter Name</label>                
-										<input type="text" name="sub_par_name" class="form-control" placeholder="Insert Sub Parameter Name" autocomplete="off" required onsubmit="this.setCustomValidity('')">
+										<label>Sub Parameter Name</label>
+										<textarea class="form-control" name="sub_par_name" rows="3" required placeholder="Insert Sub Parameter Name"><?php echo @$edit['sub_par_name']; ?></textarea>
 									</div> 
 
 									<div class="form-group">
-										<label>Sub Parameter Score</label>                
-										<input type="number" name="sub_par_score" class="form-control" placeholder="Insert Score Sub Parameter" autocomplete="off" required onsubmit="this.setCustomValidity('')">
+										<label>Sub Parameter Score</label>
+										<input type="number" name="sub_par_score" class="form-control" placeholder="Insert Score Sub Parameter" required value="<?php echo @$edit['sub_par_score']; ?>" list="gol">
 									</div> 
 
 									<div class="form-group">
 										<label>Status</label>
-										<select type="text" name="status_sub" class="form-control" autocomplete="off" required onsubmit="this.setCustomValidity('')">
-											<!-- <option value=Null></option> -->
+										<select type="text" name="status_sub" class="form-control" placeholder="a or n" required value="<?php echo @$edit['status_sub']; ?>" list="gol">
+											<option value=Null></option>
 											<option value="a">a</option>
 											<option value="n">n</option>
 										</select>
 									</div>
 									
 									<div class="form-group">
-										<label>Date Valid From</label>                
-										<input type="date" name="date_valid_from" class="form-control" placeholder="Insert Date" autocomplete="off" required onsubmit="this.setCustomValidity('')">
+										<label>Date Valid From</label>
+										<input type="date" name="date_valid_from" class="form-control" placeholder="Insert Date" required value="<?php echo @$edit['date_valid_from']; ?>" list="gol">
 									</div> 
 
 									<div class="form-group">
-										<label>Date Valid To</label>                
-										<input type="date" name="date_valid_to" class="form-control" placeholder="Insert Date" autocomplete="off" required onsubmit="this.setCustomValidity('')">
+										<label>Date Valid To</label>
+										<input type="date" name="date_valid_to" class="form-control" placeholder="Insert Date" required value="<?php echo @$edit['date_valid_to']; ?>" list="gol">
 									</div> 
 
 									<div class="form-group">
-										<label>Insert By</label>                
-										<input type="text" name="inserted_by" class="form-control" placeholder="Insert By" autocomplete="off" required onsubmit="this.setCustomValidity('')">
+										<label>Insert By</label>
+										<input type="text" name="inserted_by" class="form-control" placeholder="Insert By" required value="<?php echo @$edit['inserted_by']; ?>" list="gol">
 									</div> 
 
 									<div class="form-group">
-										<label>Date Inserted</label>                
-										<input type="date" name="date_inserted" class="form-control" placeholder="Insert Date" autocomplete="off" required onsubmit="this.setCustomValidity('')">
+										<label>Date Inserted</label>
+										<input type="date" name="date_inserted" class="form-control" placeholder="Insert Date" required value="<?php echo @$edit['date_inserted']; ?>" list="gol">
 									</div> 
 
 									<div class="form-group">
-										<label>ID Sub Parameter</label>                
-										<input type="text" name="id_sub_par" class="form-control" placeholder="Insert ID Sub parameter" autocomplete="off" required onsubmit="this.setCustomValidity('')">
+										<label>ID Sub Parameter</label>
+										<input type="text" name="id_sub_par" class="form-control" placeholder="Insert ID Sub parameter" required value="<?php echo @$edit['id_sub_par']; ?>" list="gol">
 									</div>
 
 									<div class="form-group">
 										<label>Knock Out Status</label>
-										<select type="text" name="ko_status" class="form-control" autocomplete="off" required onsubmit="this.setCustomValidity('')">
-											<!-- <option value=Null></option> -->
+										<select type="text" name="ko_status" class="form-control" placeholder="Insert Date" required value="<?php echo @$edit['ko_status']; ?>" list="gol">
+											<option value=Null></option>
 											<option value="n">n</option>
 											<option value="a">a</option>
 										</select>
@@ -172,7 +186,7 @@
 									<div class="form-group">
 										<?php  
 										  if (@$_GET['id']=="") {?>
-											<input type="submit" name="bsimpan" class="btn btn-primary btn-lg btn-block" value="SIMPAN"  style="background: #9e6bff;">
+											<input type="submit" name="bsimpan" class="btn btn-primary btn-lg btn-block" value="SIMPAN"  style="background: #3074d1;">
 										  <?php }else{ ?>
 											<input type="submit" name="bubah" class="btn btn-success btn-lg btn-block" value="UBAH" style="background: #00cc4c;">
 										<?php } ?>
@@ -187,7 +201,7 @@
 				</div>
 				<div class="col-md-8">
 					<div class="panel panel-default">
-						<div class="panel-heading">DAFTAR SUB PARAMETER</div>
+						<div class="panel-heading">SUB PARAMETER LIST</div>
 						<div class="panel-body">
 							<div class="col-md-12">
 								<form method="post">
@@ -219,27 +233,27 @@
 										<tbody>
 											<?php  
 												$no=0;
-												$data = $aksi->tampil($table,$cari,"");
+												$data = $aksi->tampil($table,$cari,"ORDER BY id_sub_tbl ASC");
 												if ($data=="") {
-													$aksi->no_record(7);
+													$aksi->no_record(11);
 												}else{
 													foreach ($data as $r) {
 														$cek = $aksi->cekdata("sub_parameter_tbl WHERE id_sub_tbl = '$r[id_sub_tbl]'");
 													$no++; ?>
 
 													<tr>
-													<td class="text-center"><?php echo $r['id_sub_tbl'];?></td>
-													<td class="text-center"><?php echo $r['sub_par_name'];?></td>
-													<td class="text-center"><?php echo $r['sub_par_score'];?></td>
-													<td class="text-center"><?php echo $r['status_sub'];?></td>
-													<td class="text-center"><?php echo $r['date_valid_from'];?></td>
-													<td class="text-center"><?php echo $r['date_valid_to'];?></td>
-													<td class="text-center"><?php echo $r['inserted_by'];?></td>
-													<td class="text-center"><?php echo $r['date_inserted'];?></td>													
-													<td class="text-center"><?php echo $r['id_sub_par'];?></td>
-													<td class="text-center"><?php echo $r['ko_status'];?></td>
-													<td align="center"><a href="?menu=sub_parameter&edit&id=<?php echo $r['id_sub_tbl']; ?>" ><span class="glyphicon glyphicon-edit"></span></a></td>
-													<td align="center"><a href="?menu=sub_parameter&hapus&id=<?php echo md5(sha1($r['id_sub_tbl'])); ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
+														<td class="text-center"><?php echo $r['id_sub_tbl'];?></td>
+														<td class="text-center"><?php echo $r['sub_par_name'];?></td>
+														<td class="text-center"><?php echo $r['sub_par_score'];?></td>
+														<td class="text-center"><?php echo $r['status_sub'];?></td>
+														<td class="text-center"><?php echo $r['date_valid_from'];?></td>
+														<td class="text-center"><?php echo $r['date_valid_to'];?></td>
+														<td class="text-center"><?php echo $r['inserted_by'];?></td>
+														<td class="text-center"><?php echo $r['date_inserted'];?></td>													
+														<td class="text-center"><?php echo $r['id_sub_par'];?></td>
+														<td class="text-center"><?php echo $r['ko_status'];?></td>
+														<td align="center"><a href="?menu=sub_parameter&edit&id=<?php echo md5(sha1($r['id_sub_tbl'])); ?>"><span class="glyphicon glyphicon-edit"></span></a></td>
+														<td align="center"><a onclick="return confirm('Are you sure want to delete this data ?')" href="?menu=sub_parameter&hapus&id=<?php echo md5(sha1($r['id_sub_tbl'])); ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
 													</tr>
 											<?php } } ?>
 										 </tbody>
